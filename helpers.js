@@ -42,11 +42,10 @@
   
     // Draw circles
     for (let i = 0; i < circles.length; i++) {
-      let circle = circles[i];
-      if (circle.active) {
+      if (circles[i].active === true) {
         ctx.beginPath();
-        ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = circle.color;
+        ctx.arc(circles[i].x, circles[i].y, circles[i].radius, 0, Math.PI * 2);
+        ctx.strokeStyle = circles[i].color;
         ctx.stroke();
         ctx.closePath();
       }
@@ -54,10 +53,9 @@
   
     // Draw squares
     for (let i = 0; i < rects.length; i++) {
-      let rect = rects[i];
-      if (rect.active) {
+      if (rects[i].active === true) {
         ctx.fillStyle = "red";
-        ctx.fillRect(rect.x, rect.y, rect.size, rect.size);
+        ctx.fillRect(rects[i].x, rects[i].y, rects[i].size, rects[i].size);
       }
     }
   }

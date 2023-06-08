@@ -33,16 +33,14 @@ function gameLogic() {
 // MOVE CIRCLES
 function moveCircles() {
   for (let i = 0; i < circles.length; i++) {
-    if (circles[i].active) {
-      circles[i].x += circles[i].speedX;
-      circles[i].y += circles[i].speedY;
-
+    if (circles[i].active === true) {
+      circles[i].x += circles[i].speed;
       // Check if circle hits the canvas boundaries
       if (
-        circles[i].x - circles[i].radius < 0 ||
-        circles[i].x + circles[i].radius > cnv.width
+        circles[i].y - circles[i].radius < 0 ||
+        circles[i].y + circles[i].radius > cnv.width
       ) {
-        circles[i].speed *= -1;
+        circles[i].active = false;
       }
     }
   }
