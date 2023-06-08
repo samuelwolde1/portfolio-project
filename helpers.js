@@ -1,31 +1,4 @@
 // HELPER FUNCTIONS
-
-levels = {
-    easy: {
-      circleSpeed: 2, // Adjust the speed of circles
-      rectSpeed: 1.5, // Adjust the speed of squares
-      circleSize: 25, // Adjust the size of circles
-      rectSize: 30, // Adjust the size of squares
-    },
-    medium: {
-      circleSpeed: 3,
-      rectSpeed: 2,
-      circleSize: 20,
-      rectSize: 25,
-    },
-    hard: {
-      circleSpeed: 4,
-      rectSpeed: 3,
-      circleSize: 15,
-      rectSize: 20,
-    },
-    extreme: {
-      circleSpeed: 5,
-      squareSpeed: 4,
-      circleSize: 10,
-      rectSize: 15,
-    },
-  };
   
   // DRAW START SCREEN
   function startScreen() {

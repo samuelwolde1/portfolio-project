@@ -23,10 +23,28 @@ let player = {
 function currentLvl(level){
     let level = document.getElementById("diffSelect").value;
     if (level === "easy"){
-        circles.speed = 2;
-        circles.size
+        circles.speed = 1;
+        circles.size = 25;
         rects.speed = 1;
-
+        rects.size = 30;
+    }
+    else if (level === "medium"){
+      circles.speed = 2.5;
+      circles.size = 15;
+      rects.speed = 2;
+      rects.size = 20;
+    }
+    else if (level === "hard"){
+      circles.speed = 4;
+      circles.size = 10;
+      rects.speed = 3.5;
+      rects.size = 10;
+    }
+    else if (level === "extreme"){
+      circles.speed = 4;
+      circles.size = 7;
+      rects.speed = 4;
+      rects.size = 6.5;
     }
 }
 
