@@ -19,12 +19,24 @@ let player = {
   speed: 5,
 };
 
+// CHECK LVL SELECTION
+function currentLvl(level){
+    let level = document.getElementById("diffSelect").value;
+    if (level === "easy"){
+        circles.speed = 2;
+        circles.size
+        rects.speed = 1;
+
+    }
+}
+
 // START DRAW FUNCTION ON PAGE LOAD
 window.addEventListener("load", draw);
 
 function draw() {
   // GAME STATE
   if (state === "start") {
+    currentLvl();
     startScreen();
   } else if (state === "running") {
     gameLogic();
@@ -45,6 +57,7 @@ function generateCircles(){
     y: randomInt(0, cnv.height),
     radius: randomInt(10, 30),
     color: randomRGB(),
+    speed: 0,
     active: true,
   };
   circles.push(circle);
@@ -56,6 +69,7 @@ function generateRect(){
     y: randomInt(0, cnv.height),
     size: randomInt(20, 40),
     color: randomRGB(),
+    speed: 0, 
     active: true,
   };
   rects.push(rect);
