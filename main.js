@@ -19,50 +19,16 @@ let player = {
   speed: 5,
 };
 
-// // CHECK LVL SELECTION
-// function currentLvl(level){
-//     level = document.getElementById("diffSelect").value;
-//     if (level === "easy"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 1;
-//         circles[i].size = 25;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 1;
-//         rects[i].size = 30;
-//       }
-//     }
-//     else if (level === "medium"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 2.5;
-//         circles[i].size = 15;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 2;
-//         rects[i].size = 20;
-//       }
-//     }
-//     else if (level === "hard"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 4;
-//         circles[i].size = 10;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 3.5;
-//         rects[i].size = 10;
-//       }
-//     }
-//     else if (level === "extreme"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 4;
-//         circles[i].size = 7;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 4;
-//         rects[i].size = 6.5;
-//       }
-//     }
-// }
+// CHECK LVL SELECTION
+function currentLvl(level){
+    let level = document.getElementById("diffSelect").value;
+    if (level === "easy"){
+        circles.speed = 2;
+        circles.size
+        rects.speed = 1;
+
+    }
+}
 
 // START DRAW FUNCTION ON PAGE LOAD
 window.addEventListener("load", draw);
@@ -70,7 +36,7 @@ window.addEventListener("load", draw);
 function draw() {
   // GAME STATE
   if (state === "start") {
-    // currentLvl();
+    currentLvl();
     startScreen();
   } else if (state === "running") {
     gameLogic();
@@ -91,7 +57,7 @@ function generateCircles(){
     y: randomInt(0, cnv.height),
     radius: randomInt(10, 30),
     color: randomRGB(),
-    speed: 1,
+    speed: 0,
     active: true,
   };
   circles.push(circle);
@@ -103,7 +69,7 @@ function generateRect(){
     y: randomInt(0, cnv.height),
     size: randomInt(20, 40),
     color: randomRGB(),
-    speed: 1, 
+    speed: 0, 
     active: true,
   };
   rects.push(rect);
