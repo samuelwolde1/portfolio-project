@@ -30,23 +30,35 @@ function gameLogic() {
   checkGameOver();
 }
 
+// MOVE PLAYER
+function movePlayer() {
+  player.x = mouseX;
+  player.y = mouseY;
+}
+
 // MOVE CIRCLES
 function moveCircles() {
   for (let i = 0; i < circles.length; i++) {
-    if (circles[i].active) {
+    if (circles[i].active === true) {
       circles[i].x += circles[i].speedX;
       circles[i].y += circles[i].speedY;
-
       // Check if circle hits the canvas boundaries
       if (
         circles[i].x - circles[i].radius < 0 ||
         circles[i].x + circles[i].radius > cnv.width
       ) {
-        circles[i].speed *= -1;
+        circles[i].speedX *= -1;
+      }
+      if (
+        circles[i].y - circles[i].radius < 0 ||
+        circles[i].y + circles[i].radius > cnv.height
+      ){
+        circles[i].speedY *= -1;
       }
     }
   }
 }
+
 
 // MOVE RECTANGLES
 function moveRects() {
@@ -75,13 +87,25 @@ function moveRects() {
 
 
 // Determine the distance between (x1, y1) and (x2, y2)
-function dist(x1, y1, x2, y2) {}
+function dist(x1, y1, x2, y2) {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  return Math.sqrt(dx * dx + dy * dy);
+}
 
 // Determine if point (x, y) is in rect object (x, y, w, h)
-function ptInRect(x, y, rect) {}
+function ptInRect(x, y, rect) {
+  return x >= rect.x &&
+   x <= rect.x + rect.width &&
+   y >= rect.y && 
+   y <= rect.y + rect.height;
+}
 
 // Determine if point (x, y) is in circle object (x, y, r)
-function ptInCircle(x, y, circle) {}
+function ptInCircle(x, y, circle) {
+  let distance = dist(x, y, circle.x, circle.y);
+  return distance
+}
 
 // Determine if two rect objects (x, y, w, h) collide
 function rectCollide(rect1, rect2) {}
