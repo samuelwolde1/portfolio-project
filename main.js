@@ -1,7 +1,6 @@
 // JS GAME SKELETON
 
 // CANVAS SETUP
-let level = document.getElementById("lvlSelect").value;
 let cnv = document.getElementById("my-canvas");
 let ctx = cnv.getContext("2d");
 cnv.width = 800;
@@ -20,6 +19,50 @@ let player = {
   speed: 5,
 };
 
+// // CHECK LVL SELECTION
+// function currentLvl(level){
+//     level = document.getElementById("diffSelect").value;
+//     if (level === "easy"){
+//       for (let i = 0; i < circles.length; i++){
+//         circles[i].speed = 1;
+//         circles[i].size = 25;
+//       }
+//       for (let i = 0; i < circles.length; i++){
+//         rects[i].speed = 1;
+//         rects[i].size = 30;
+//       }
+//     }
+//     else if (level === "medium"){
+//       for (let i = 0; i < circles.length; i++){
+//         circles[i].speed = 2.5;
+//         circles[i].size = 15;
+//       }
+//       for (let i = 0; i < circles.length; i++){
+//         rects[i].speed = 2;
+//         rects[i].size = 20;
+//       }
+//     }
+//     else if (level === "hard"){
+//       for (let i = 0; i < circles.length; i++){
+//         circles[i].speed = 4;
+//         circles[i].size = 10;
+//       }
+//       for (let i = 0; i < circles.length; i++){
+//         rects[i].speed = 3.5;
+//         rects[i].size = 10;
+//       }
+//     }
+//     else if (level === "extreme"){
+//       for (let i = 0; i < circles.length; i++){
+//         circles[i].speed = 4;
+//         circles[i].size = 7;
+//       }
+//       for (let i = 0; i < circles.length; i++){
+//         rects[i].speed = 4;
+//         rects[i].size = 6.5;
+//       }
+//     }
+// }
 
 // START DRAW FUNCTION ON PAGE LOAD
 window.addEventListener("load", draw);
@@ -27,6 +70,7 @@ window.addEventListener("load", draw);
 function draw() {
   // GAME STATE
   if (state === "start") {
+    // currentLvl();
     startScreen();
   } else if (state === "running") {
     gameLogic();
@@ -42,35 +86,30 @@ function draw() {
 // Generate objects
 
 function generateCircles(){
-  circles = [];
-  for (let i = 0; i < levels[level].circleCount; i++){
   let circle = {
-    x: randomInt(calculateCircleSize(level), cnv.width - calculateCircleSize(level)),
-    y: randomInt(calculateCircleSize(level), cnv.height - calculateCircleSize(level)),
-    radius: calculateCircleSize(level),
+    x: randomInt(0, cnv.width),
+    y: randomInt(0, cnv.height),
+    radius: randomInt(10, 30),
     color: randomRGB(),
-    speedX: calculateCircleSpeed(level),
-    speedY: calculateCircleSpeed(level),
+    speed: 1,
     active: true,
   };
-  circles.push(circle);
-  }
+  if (circles.active === true){
+    circles.push(circle);
 }
+  }
+  
 
 function generateRect(){
-  rects = [];
-  for (let i = 0; i < levels[level].rectCount; i++){
   let rect = {
-    x: randomInt(calculateRectSize(level), cnv.width - calculateRectSize(level)),
-    y: randomInt(calculateRectSize(level), cnv.height - calculateRectSize(level)),
-    size: calculateRectSize(level),
+    x: randomInt(0, cnv.width),
+    y: randomInt(0, cnv.height),
+    size: randomInt(20, 40),
     color: randomRGB(),
-    speedX: calculateRectSpeed(level), 
-    speedY: calculateRectSpeed(level),
+    speed: 1, 
     active: true,
   };
   rects.push(rect);
-  }
 }
 
 // EVENT STUFF
@@ -80,37 +119,9 @@ document.addEventListener("keydown", keydownHandler);
 
 function keydownHandler(e) {
   if (state === "start" && e.code === "Space") {
-    let levelSelect = document.getElementById("lvlSelect");
-    level = levelSelect.value;
     state = "running";
   } else if (state === "gameover" && e.code === "Space") {
     reset();
-  }
-}
-
-document.addEventListener("mousedown", mousedownHandler);
-
-function mousedownHandler(e) {
-  if (state === "running") {
-    // Check if the user clicked on a circle
-    for (let i = 0; i < circles.length; i++) {
-      if (ptInCircle(mouseX, mouseY, circles[i])) {
-        circles.splice(i, 1);
-        checkLevelCompleted();
-      }
-    }
-
-    // Check if the user clicked on a rectangle
-    for (let i = 0; i < rects.length; i++) {
-      if (ptInRect(mouseX, mouseY, rects[i])) {
-        state = "gameover"; 
-      }
-    }
-
-    // // Check if all circles have been removed
-    // if (circles.length === 0) {
-    //   levelCompleted(); // Call the levelCompleted function
-    // }
   }
 }
 
