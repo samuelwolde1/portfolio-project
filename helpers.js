@@ -159,3 +159,18 @@ function reset() {
       return 6.5;
     }
   }
+function checkLevelCompleted(){
+    if (circles.length === 0) {
+      gameWon();
+    }
+  }
+
+  function gameWon() {
+    ctx.clearRect(0, 0, cnv.width, cnv.height);
+    ctx.fillStyle = "green";
+    ctx.fillRect(0, 0, cnv.width, cnv.height);
+    ctx.font = "60px Arial";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText("Game Won", cnv.width / 2, cnv.height / 2);
+  }

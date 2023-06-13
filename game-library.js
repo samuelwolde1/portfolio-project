@@ -23,7 +23,8 @@ function mousemoveHandlerGameLib(e) {
 
 // USEFUL GAME FUNCTIONS
 // GAME LOGIC
-function gameLogic() {
+function gameLogic(timeStamp) {
+  let elapsed = timeStamp / 1000;
   movePlayer();
   moveCircles();
   moveRects();

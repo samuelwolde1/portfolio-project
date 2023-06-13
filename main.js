@@ -20,16 +20,6 @@ let player = {
   speed: 5,
 };
 
-// CHECK LVL SELECTION
-// function currentLvl(level){
-//     let level = document.getElementById("diffSelect").value;
-//     if (level === "easy"){
-//         circles.speed = 2;
-//         circles.size
-//         rects.speed = 1;
-
-//     }
-// }
 
 // START DRAW FUNCTION ON PAGE LOAD
 window.addEventListener("load", draw);
@@ -37,7 +27,6 @@ window.addEventListener("load", draw);
 function draw() {
   // GAME STATE
   if (state === "start") {
-    // currentLvl();
     startScreen();
   } else if (state === "running") {
     gameLogic();
@@ -106,7 +95,8 @@ function mousedownHandler(e) {
     // Check if the user clicked on a circle
     for (let i = 0; i < circles.length; i++) {
       if (ptInCircle(mouseX, mouseY, circles[i])) {
-        circles.splice(i, 1); 
+        circles.splice(i, 1);
+        checkLevelCompleted();
       }
     }
 
