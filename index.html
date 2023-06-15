@@ -9,22 +9,22 @@
     <script defer src="js/main.js"></script>
   </head>
   <body>
-    <h1>Aim Trainer</h1>
+    <h1><b>Aim Trainer</h1></b>
     <div class="level-select">
-      <p>Select Level</p>
-      <select id="diffSelect">
-        <option id="easy">Easy</option>
-        <option id="medium">Medium</option>
-        <option id="hard">Hard</option>
-        <option id="extreme">Extreme</option>
+      <h4>Select a level and press space to begin playing</h4>
+      <select id="lvlSelect">
+        <option value ="easy">Easy</option>
+        <option value ="medium">Medium</option>
+        <option value ="hard">Hard</option>
+        <option value ="extreme">Extreme</option>
       </select>
     </div>
     <canvas id="my-canvas"></canvas>
     <div class="game-stats">
-      <p id="time">Time: </p>
-      <p id="hits">| Hits: </p>
-      <p id="misses">Misses: </p>
-      <p id="accuracy">Accuracy: </p>
+      <div id="timer"></div>  
+      <div id="hits"></div>
+      <div id="misses"></div> 
+      <div id="accuracy"></div>
     </div>
   </body>
 </html>

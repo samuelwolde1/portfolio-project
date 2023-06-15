@@ -7,8 +7,15 @@ cnv.width = 800;
 cnv.height = 600;
 
 // GLOBAL VARIABLES
+let level = document.getElementById("lvlSelect").value;
+let timer = 0;
+let hits = 0;
+let misses = 0;
+let accuracy = 0;
 let circles = [];
 let rects = [];
+generateCircles();
+generateRects();
 let state = "start";
 let player = {
   x: 388,
@@ -19,64 +26,23 @@ let player = {
   speed: 5,
 };
 
-// // CHECK LVL SELECTION
-// function currentLvl(level){
-//     level = document.getElementById("diffSelect").value;
-//     if (level === "easy"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 1;
-//         circles[i].size = 25;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 1;
-//         rects[i].size = 30;
-//       }
-//     }
-//     else if (level === "medium"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 2.5;
-//         circles[i].size = 15;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 2;
-//         rects[i].size = 20;
-//       }
-//     }
-//     else if (level === "hard"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 4;
-//         circles[i].size = 10;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 3.5;
-//         rects[i].size = 10;
-//       }
-//     }
-//     else if (level === "extreme"){
-//       for (let i = 0; i < circles.length; i++){
-//         circles[i].speed = 4;
-//         circles[i].size = 7;
-//       }
-//       for (let i = 0; i < circles.length; i++){
-//         rects[i].speed = 4;
-//         rects[i].size = 6.5;
-//       }
-//     }
-// }
 
 // START DRAW FUNCTION ON PAGE LOAD
 window.addEventListener("load", draw);
 
 function draw() {
+  level = document.getElementById("lvlSelect").value; 
   // GAME STATE
   if (state === "start") {
-    // currentLvl();
     startScreen();
   } else if (state === "running") {
+    timer++;
     gameLogic();
     gameScreen();
   } else if (state === "gameover") {
     gameOver();
+  } else if (state === "gamewon"){
+    gameWon();
   }
 
   // REDRAW
@@ -84,44 +50,83 @@ function draw() {
 }
 
 // Generate objects
-
-function generateCircles(){
-  let circle = {
-    x: randomInt(0, cnv.width),
-    y: randomInt(0, cnv.height),
-    radius: randomInt(10, 30),
-    color: randomRGB(),
-    speed: 1,
-    active: true,
-  };
-  if (circles.active === true){
+function generateCircles() {
+  for (let i = 0; i < levels[level].circleCount; i++) {
+    let circle = {
+      x: randomInt(calculateCircleSize(level), cnv.width - calculateCircleSize(level)),
+      y: randomInt(calculateCircleSize(level), cnv.height - calculateCircleSize(level)),
+      radius: calculateCircleSize(level),
+      color: randomRGB(),
+      speedX: calculateCircleSpeed(level),
+      speedY: calculateCircleSpeed(level),
+      active: true,
+    };
     circles.push(circle);
-}
   }
-  
+}
 
-function generateRect(){
-  let rect = {
-    x: randomInt(0, cnv.width),
-    y: randomInt(0, cnv.height),
-    size: randomInt(20, 40),
-    color: randomRGB(),
-    speed: 1, 
-    active: true,
-  };
-  rects.push(rect);
+function generateRects() {
+  for (let i = 0; i < levels[level].rectCount; i++) {
+    let rect = {
+      x: randomInt(calculateRectSize(level), cnv.width - calculateRectSize(level)),
+      y: randomInt(calculateRectSize(level), cnv.height - calculateRectSize(level)),
+      size: calculateRectSize(level),
+      color: randomRGB(),
+      speedX: calculateRectSpeed(level),
+      speedY: calculateRectSpeed(level),
+      active: true,
+    };
+    rects.push(rect);
+  }
 }
 
 // EVENT STUFF
+
+// Event Listener for whenver the level is changed and space is pressed
+let levelSelect = document.getElementById("lvlSelect");
+levelSelect.addEventListener("change", updateObjects);
 
 // KEYDOWN EVENT
 document.addEventListener("keydown", keydownHandler);
 
 function keydownHandler(e) {
   if (state === "start" && e.code === "Space") {
+    let levelSelect = document.getElementById("lvlSelect");
+    level = levelSelect.value;
     state = "running";
   } else if (state === "gameover" && e.code === "Space") {
     reset();
+  } else if (state === "gamewon" && e.code === "Space"){
+    reset();
+  }
+}
+
+cnv.addEventListener("mousedown", mousedownHandler);
+
+function mousedownHandler(e) {
+  if (state === "running") {
+    let clickedCircle = false;
+    for (let i = 0; i < circles.length; i++) {
+      // Check if the user clicked on a circle
+      if (ptInCircle(player.x, player.y, circles[i]) <= circles[i].radius){
+        circles.splice(i, 1);
+        clickedCircle = true;
+        hits++;
+        if(circles.length === 0){
+          state = "gamewon"
+        }
+      }
+    }
+    // Check if the user didn't click on a circle
+    if (clickedCircle === false){
+      misses++;
+    }
+    // Check if the user clicked on a rectangle
+    for (let i = 0; i < rects.length; i++) {
+      if (ptInRect(player.x, player.y, rects[i])) {
+        state = "gameover";
+      }
+    }
   }
 }
 
